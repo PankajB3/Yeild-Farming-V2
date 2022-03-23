@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract FarmContract {
 
-    IERC20 public stakedToken;
+    IERC20 private stakedToken;
     GreedyToken public gdyTkn;
 
     mapping(address=>bool) alreadyStaked; // wether already staked or not
@@ -19,7 +19,7 @@ contract FarmContract {
     event Unstake(address indexed from, uint256 amount);
     event YieldWithdraw(address indexed to, uint256 amount);
 
-    constructor(IERC20 stakedAddress, GreedyToken GreedyTokenAddr){
+    constructor(IERC20 stakedAddress, GreedyToken GreedyTokenAddr) {
         stakedToken = stakedAddress;
         gdyTkn = GreedyTokenAddr;
     }
