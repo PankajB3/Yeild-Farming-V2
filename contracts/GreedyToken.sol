@@ -9,7 +9,13 @@ contract GreedyToken is ERC20, Ownable {
     constructor() ERC20("GreedyToken","GdyTkn"){
 
     }
-    function mint(address usr, uint256 value) public onlyOwner{
+
+    // modifier onlyFarm(){
+    //     require();
+    //     _;
+    // }
+   
+    function mint(address usr, uint256 value) external onlyOwner{
         _mint(usr, value);
     }
 }

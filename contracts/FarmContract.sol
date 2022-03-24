@@ -2,6 +2,8 @@
 
 pragma solidity >=0.8.0;
 
+// import "@nomiclabs/buidler/console.sol";
+import "hardhat/console.sol";
 import "./GreedyToken.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
@@ -27,6 +29,7 @@ contract FarmContract {
     function getTimeDifference(address user) internal view returns(uint256){
         uint256 end = block.timestamp;
         uint diff = end - startTime[user];
+        // console.log("diff = ",diff);
         return diff;
     }
 
@@ -34,7 +37,10 @@ contract FarmContract {
         uint256 timeDiff = getTimeDifference(user) * 10**18;
         uint256 rate = 86400; // seconds in a day
         uint256 timeRate = timeDiff / rate;
+        // console.log("timeRate = ",timeRate);
+        // console.log("User Balance = ",stakedBalance[msg.sender]);
         uint256 yeild = (stakedBalance[user] * timeRate) / 10**18;
+        // console.log(yeild);
         return yeild;
     }
 
@@ -51,6 +57,7 @@ contract FarmContract {
         stakedBalance[msg.sender] += amt;
         startTime[msg.sender] = block.timestamp;
         alreadyStaked[msg.sender] = true;
+        console.log(stakedBalance[msg.sender]);
         emit Stake(msg.sender, amt);
     }   
 
@@ -76,6 +83,8 @@ contract FarmContract {
             yeildTokenBalance[msg.sender] = 0;
             totalYeild += bal;
         }
+        // console.log(totalYeild);
+        gdyTkn.mint(msg.sender, totalYeild);
         emit YieldWithdraw(msg.sender, totalYeild);
     }
     
